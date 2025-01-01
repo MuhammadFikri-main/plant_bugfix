@@ -98,15 +98,15 @@ document.addEventListener("DOMContentLoaded", function () {
                     <ul class="nav navbar-nav">
                         <li class="nav-item"> <a class="nav-link active" href="index.php">Home <span class="sr-only">(current)</span></a> </li>
                         <?php
-$ress = mysqli_query($db, "select * from restaurant");
+                            $ress = mysqli_query($db, "select * from restaurant");
 
-while ($rows = mysqli_fetch_array($ress)) {
-    echo '
-    <li class="nav-item">
-        <a class="nav-link" href="dishes.php?res_id=' . $rows['rs_id'] . '">Menu</a>
-    </li>';
-}
-?>
+                            while ($rows = mysqli_fetch_array($ress)) {
+                                echo '
+                                <li class="nav-item">
+                                    <a class="nav-link" href="dishes.php?res_id=' . $rows['rs_id'] . '">Menu</a>
+                                </li>';
+                            }
+                        ?>
                         <?php
                         if (empty($_SESSION["user_id"])) {
                             echo '<li class="nav-item"><a href="login.php" class="nav-link active">Login</a> </li>
@@ -260,10 +260,8 @@ while ($rows = mysqli_fetch_array($ress)) {
 									{
 									foreach($products as $product)
 										{
-						
-													
-													 
-													 ?>
+                                            
+                                            ?>
                                 <div class="food-item">
                                     <div class="row">
                                         <div class="col-xs-12 col-sm-12 col-lg-8">
