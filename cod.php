@@ -134,46 +134,27 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th>Order ID</th>
-                            <th>Ordered Dishes</th>
+                            <th>Ordered Item</th>
                             <th>Quantity</th>
                             <th>Price</th>
-                            <th>Address</th>
-                            <th>Date</th>
+                            <!-- <th>Address</th>
+                            <th>Date</th> -->
                             
                         </tr>
                     </thead>
                     <tbody>
                         <?php
     $user_id = $_SESSION["user_id"];
-    // $query = "SELECT users_orders.*, users.address
-    //           FROM users_orders
-    //           INNER JOIN users ON users.u_id = users_orders.u_id
-    //           WHERE users.u_id = '$user_id'
-    //           ORDER BY users_orders.o_id DESC";
-    // $result = mysqli_query($db, $query);
+    $order_id = $_GET["o_id"];
 
-    // $row = mysqli_fetch_assoc($result);
-
-    // if ($row) {
-    //     echo "<tr>";
-    //     echo "<td>" . $row['o_id'] . "</td>";
-    //     echo "<td>" . $row['title'] . "</td>";
-    //     echo "<td>" . $row['quantity'] . "</td>";
-    //     echo "<td>RM " . $row['price'] . "</td>";
-    //     echo "<td>" . $row['address'] . "</td>";
-    //     echo "<td>" . $row['date'] . "</td>";
-    //     echo "</tr>";
-    // } else {
-    //     echo "<tr><td colspan='6'>No orders found</td></tr>";
-    // }
     // Use prepared statements to prevent SQL injection
-    $stmt = $db->prepare("SELECT users_orders.*, users.address 
-                        FROM users_orders 
-                        INNER JOIN users ON users.u_id = users_orders.u_id 
-                        WHERE users.u_id = ? 
-                        ORDER BY users_orders.o_id DESC");
-    $stmt->bind_param("i", $user_id);
+    $stmt = $db->prepare("SELECT users_orders.*, users.address, order_items.title, order_items.quantity, order_items.price 
+                                FROM users_orders 
+                                INNER JOIN users ON users.u_id = users_orders.u_id 
+                                INNER JOIN order_items ON users_orders.o_id = order_items.o_id 
+                                WHERE users.u_id = ? AND users_orders.o_id = ?
+                                ORDER BY users_orders.o_id DESC");
+    $stmt->bind_param("ii", $user_id, $order_id);
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -187,14 +168,22 @@
         // Fetch and process all rows
         while ($row = mysqli_fetch_assoc($result)) {
             echo "<tr>";
-            echo "<td>" . htmlspecialchars($row['o_id']) . "</td>";
             echo "<td>" . htmlspecialchars($row['title']) . "</td>";
             echo "<td>" . htmlspecialchars($row['quantity']) . "</td>";
             echo "<td>RM " . htmlspecialchars($row['price']) . "</td>";
-            echo "<td>" . htmlspecialchars($row['address']) . "</td>";
-            echo "<td>" . htmlspecialchars($row['date']) . "</td>";
+            // echo "<td>" . htmlspecialchars($row['address']) . "</td>";
+            // echo "<td>" . htmlspecialchars($row['date']) . "</td>";
             echo "</tr>";
+            // Store the total price from the users_orders table
+            $total_price = $row['total_price'];
         }
+    ?>
+    <!-- Display total price in the footer -->
+    <tr>
+        <td colspan="2" class="text-right"><strong>Total Price:</strong></td>
+        <td><strong>RM <?php echo htmlspecialchars(number_format($total_price, 2)); ?></strong></td>
+    </tr>
+    <?php 
     } else {
         // Display "No orders found" message spanning all columns
         echo "<tr><td colspan='7' class='text-center'>No orders found</td></tr>";
@@ -202,7 +191,6 @@
 
     $stmt->close();
     ?>
-
                     </tbody>
                 </table>
             </div>

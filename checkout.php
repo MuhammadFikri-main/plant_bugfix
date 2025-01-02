@@ -10,23 +10,65 @@ if(empty($_SESSION["user_id"]))
 	header('location:login.php');
 }
 else{									  
-    foreach ($_SESSION["cart_item"] as $item)
-    {
+    // foreach ($_SESSION["cart_item"] as $item)
+    // {
 
-    $item_total += ($item["price"]*$item["quantity"]);
+    // $item_total += ($item["price"]*$item["quantity"]);
     
-        if($_POST['submit'])
-        {
+    //     if($_POST['submit'])
+    //     {
 
-            $SQL="insert into users_orders(u_id,title,quantity,price) values('".$_SESSION["user_id"]."','".$item["title"]."','".$item["quantity"]."','".$item["price"]."')";
+    //         $SQL="insert into users_orders(u_id,title,quantity,price) values('".$_SESSION["user_id"]."','".$item["title"]."','".$item["quantity"]."','".$item["price"]."')";
 
-            mysqli_query($db,$SQL);
+    //         mysqli_query($db,$SQL);
             
-            $success = header('location:cod.php');
+    //         $success = header('location:cod.php');
 
-            // Empty the cart after placing the order
+    //         // Empty the cart after placing the order
+    //         unset($_SESSION["cart_item"]);
+            
+    //     }
+    // }
+    if($_POST['submit']){
+        // Start a transaction
+        mysqli_begin_transaction($db);
+
+        try {
+            // Step 1: Calculate the total price of the order
+            $total_price = 0;
+            foreach ($_SESSION["cart_item"] as $item) {
+                $total_price += ($item["price"] * $item["quantity"]);
+            }
+
+            // Step 2: Insert the order into the `users_orders` table
+            $user_id = $_SESSION["user_id"];
+            $order_query = "INSERT INTO users_orders (u_id, total_price) VALUES (?, ?)";
+            $stmt = $db->prepare($order_query);
+            $stmt->bind_param("id", $user_id, $total_price);
+            $stmt->execute();
+            $order_id = $stmt->insert_id; // Get the auto-generated order ID
+
+            // Step 3: Insert each item into the `order_items` table
+            foreach ($_SESSION["cart_item"] as $item) {
+                $item_query = "INSERT INTO order_items (o_id, title, quantity, price) VALUES (?, ?, ?, ?)";
+                $stmt = $db->prepare($item_query);
+                $stmt->bind_param("isid", $order_id, $item["title"], $item["quantity"], $item["price"]);
+                $stmt->execute();
+            }
+
+            // Commit the transaction
+            mysqli_commit($db);
+
+            // Step 4: Empty the cart
             unset($_SESSION["cart_item"]);
-            
+
+            // Step 5: Redirect to the confirmation page
+            header('Location: cod.php?o_id=' . $order_id);
+            // exit();
+        } catch (Exception $e) {
+            // Rollback the transaction if any query fails
+            mysqli_rollback($db);
+            die("Order failed: " . $e->getMessage());
         }
     }
 ?>

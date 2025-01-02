@@ -49,16 +49,6 @@ include_once 'product-action.php'; //including controller
     .navbar-nav .nav-item .nav-link {
         color: orange !important; /* Text color for hover state */
     }
-
-    /* Ensure consistent slogan length */
-    .product-name {
-        height: 100px; /* Adjust this value as needed */
-        overflow: hidden; /* Hide overflow text */
-        display: -webkit-box;
-        -webkit-line-clamp: 2; /* Limit to 2 lines */
-        -webkit-box-orient: vertical;
-        text-overflow: ellipsis; /* Add ellipsis for overflow text */
-    }
 	
 </style>
 
@@ -251,7 +241,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     </div>
                 </div>
-                <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9">
+                <div class="col-xs-12 col-sm-8 col-md-8 col-lg-12">
                 <?php  // display values and item of food/dishes
                     $stmt = $db->prepare("select * from dishes where rs_id='$_GET[res_id]'");
                     $stmt->execute();
@@ -261,8 +251,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     foreach($products as $product)
                         {
                 ?>
-                <div class="col-xs-12 col-sm-6 col-md-4 food-item">
-                    <form method="post" action='dishes.php?res_id=<?php echo $_GET['res_id'];?>&action=add&id=<?php echo $product['d_id']; ?>'>
+                <div class="col-xs-12 col-sm-6 col-md-3 food-item">
                         <div class="food-item-wrap">
                             <div class="figure-wrap bg-image" data-image-src="admin/Res_img/dishes/<?php echo $product['img']; ?>" style="width:100%;height:350px;">
                                 <div class="rating pull-left"> 
@@ -271,22 +260,79 @@ document.addEventListener("DOMContentLoaded", function () {
                             </div>
                             <div class="content">
                                 <h5><a href="dishes.php?res_id='.$product['rs_id'].'"><?php echo $product['title']; ?></a></h5>
-                                <div class="product-name"><?php echo $product['slogan']; ?></div>
+                                <!-- <div class="product-name">'.$product['slogan'].'</div> -->
                                 <div class="price-btn-block"> 
                                     <span class="price">RM<?php echo $product['price']; ?></span> 
-                                    <input class=" pull-right" type="text" name="quantity" value="1" size="2" />
-                                    <input type="submit" class="btn theme-btn-dash pull-right" value="Add to cart" />
+                                    <a href="dishes.php?res_id='.$product['rs_id'].'" class="btn theme-btn-dash pull-right">Order Now</a> 
                                 </div>
                             </div>
                         </div>
-                        </form>
                     </div>
                     <?php
                             }
                         }	
                     ?>
                     </div>
-                    
+                    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+                      
+                        <!-- end:Widget menu -->
+                        <div class="menu-widget" id="2">
+                            <div class="widget-heading">
+                                <h3 class="widget-title text-dark">
+                              Your Menu 
+                           </h3>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="collapse in" id="popular2">
+						<?php  // display values and item of food/dishes
+									$stmt = $db->prepare("select * from dishes where rs_id='$_GET[res_id]'");
+									$stmt->execute();
+									$products = $stmt->get_result();
+									if (!empty($products)) 
+									{
+									foreach($products as $product)
+										{
+                                            ?>
+                                <div class="food-item">
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-12 col-lg-8">
+										<form method="post" action='dishes.php?res_id=<?php echo $_GET['res_id'];?>&action=add&id=<?php echo $product['d_id']; ?>'>
+                                            <div class="rest-logo pull-left">
+                                                <a class="restaurant-logo pull-left" href="shop.php?id=<?php echo $product['d_id']; ?>"><?php echo '<img src="admin/Res_img/dishes/'.$product['img'].'" alt="Food logo">'; ?></a>
+                                            </div>
+                                            <!-- end:Logo -->
+                                            <div class="rest-descr">
+                                                <h6><a href="#"><?php echo $product['title']; ?></a></h6>
+                                                <p> <?php echo $product['slogan']; ?></p>
+                                            </div>
+                                            <!-- end:Description -->
+                                        </div>
+                                        <!-- end:col -->
+                                        <div class="col-xs-12 col-sm-12 col-lg-4 pull-right item-cart-info"> 
+										<span class="price pull-left" >RM<?php echo $product['price']; ?></span>
+										  <input class="b-r-0" type="text" name="quantity"  style="margin-left:30px;" value="1" size="2" />
+										  <input type="submit" class="btn theme-btn" style="margin-left:40px;" value="Add to cart" />
+										</div>
+										</form>
+                                    </div>
+                                    <!-- end:row -->
+                                </div>
+                                <!-- end:Food item -->
+								
+								<?php
+									  }
+									}
+									
+								?>
+								
+								
+                              
+                            </div>
+                            <!-- end:Collapse -->
+                        </div>
+                        <!-- end:Widget menu -->
+                       
+                    </div>
                     <!-- end:Bar -->
                     <div class="col-xs-12 col-md-12 col-lg-3">
                         <div class="sidebar-wrap">
