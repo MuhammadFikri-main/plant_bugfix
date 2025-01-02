@@ -204,7 +204,7 @@ while ($rows = mysqli_fetch_array($ress)) {
                 echo '
                 <div class="col-xs-12 col-sm-6 col-md-4 food-item">
                     <div class="food-item-wrap">
-                        <div class="figure-wrap bg-image" data-image-src="admin/Res_img/dishes/'.$r['img'].'"style="width:400px;height:520px;">
+                        <div class="figure-wrap bg-image" data-image-src="admin/Res_img/dishes/'.$r['img'].'"style="width:100;height:220px;">
                             <div class="rating pull-left"> 
                                 <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> 
                             </div>
@@ -214,7 +214,7 @@ while ($rows = mysqli_fetch_array($ress)) {
                             <div class="product-name">'.$r['slogan'].'</div>
                             <div class="price-btn-block"> 
                                 <span class="price">RM'.$r['price'].'</span> 
-                                <a href="dishes.php?res_id='.$r['rs_id'].'" class="btn theme-btn-dash pull-right">Order Now</a> 
+                                <a href="shop.php?id='.$r['d_id'].'" class="btn theme-btn-dash pull-right">Order Now</a> 
                             </div>
                         </div>
                     </div>

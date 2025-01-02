@@ -179,6 +179,7 @@ session_start();
                                                 <th>Description</th>
                                                 <th>Price</th>
                                                 <th>Image</th>
+                                                <th>QR Code</th>
                                                <th>Action</th>
 												  
                                             </tr>
@@ -213,6 +214,9 @@ session_start();
 																								
 																								<td><div class="col-md-3 col-lg-8 m-b-10">
 																								<center><img src="Res_img/dishes/'.$rows['img'].'" class="img-responsive  radius" style="max-height:100px;max-width:150px;" /></center>
+																								</div></td>
+                                                                                                <td><div class="col-md-3 col-lg-8 m-b-10">
+																								<center><img src="Res_img/qr_dishes/'.$rows['qr_img'].'" class="img-responsive  radius" style="max-height:100px;max-width:150px;" /></center>
 																								</div></td>
 																								
 																							

@@ -26,6 +26,50 @@ $related_products_query = $db->prepare("SELECT * FROM dishes WHERE rs_id = ? AND
 $related_products_query->bind_param("ii", $restaurant_id, $product_id);
 $related_products_query->execute();
 $related_products = $related_products_query->get_result();
+
+// Handle form submission
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['submit'])) {
+        $quantity = $_POST['quantity'];
+        $d_id = $_POST['d_id'];
+
+        // Fetch product details
+        $stmt = $db->prepare("SELECT * FROM dishes WHERE d_id = ?");
+        $stmt->bind_param("i", $d_id);
+        $stmt->execute();
+        $product = $stmt->get_result()->fetch_assoc();
+        $stmt->close();
+
+        // Initialize the cart if it doesn't exist
+        if (!isset($_SESSION['cart_item'])) {
+            $_SESSION['cart_item'] = [];
+        }
+
+        // Add the product to the cart
+        if (isset($_SESSION['cart_item'][$d_id])) {
+            // Update the quantity if the item already exists
+            $_SESSION['cart_item'][$d_id]['quantity'] += $quantity;
+        } else {
+            // Add the item to the cart
+            $_SESSION['cart_item'][$d_id] = [
+                'quantity' => $quantity,
+                'price' => $product['price'],
+                'title' => $product['title']
+            ];
+        }
+
+        // Redirect based on the button clicked
+        if ($_POST['submit'] === 'buynow') {
+            // Redirect to the checkout page
+            header("Location: checkout.php?res_id={$product['rs_id']}&d_id=$d_id&quantity=$quantity");
+            exit();
+        } elseif ($_POST['submit'] === 'addtocard') {
+            // Redirect back to the dishes page
+            header("Location: dishes.php?res_id={$product['rs_id']}&action=add&id=$d_id");
+            exit();
+        }
+    }
+}
 ?>
 <head>
     <meta charset="utf-8">
@@ -160,8 +204,7 @@ $related_products = $related_products_query->get_result();
                         </p>
                         <h6>Description:</h6>
                         <p><?php echo $product['slogan']; ?></p>
-                        <!-- <form method="post" action="cart-update.php"> -->
-                        <form method="post" action="dishes.php?res_id=<?php echo $restaurant_ids[0];?>&action=add&id=<?php echo $product['d_id']; ?>">
+                        <form method="post">
                             <input type="hidden" name="d_id" value="<?php echo $product['d_id']; ?>">
                             <input type="hidden" name="action" value="add">
                             <div class="row">
@@ -177,6 +220,9 @@ $related_products = $related_products_query->get_result();
                             <div class="row pb-3">
                                 <div class="col d-grid">
                                     <button type="submit" class="btn btn-success btn-lg" name="submit" value="addtocard">Add To Cart</button>
+                                </div>
+                                <div class="col d-grid">
+                                    <button type="submit" class="btn btn-primary btn-lg" name="submit" value="buynow">Buy Now</button>
                                 </div>
                             </div>
                         </form>

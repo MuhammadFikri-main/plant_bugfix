@@ -123,6 +123,9 @@
                         </div>
                     </div>
                 </nav>
+                </header>
+                <!-- Page wrapper -->
+<div class="page-wrapper">
             <div class="container">
             <div class="jumbotron">
                 <h1 class="text-center" style="color: green;"><img src="images/check.png" style="width:5%;"> Order Placed Successfully.</h1>
@@ -197,6 +200,73 @@
         </div>
             
             <br>
+</div>
+            <!-- start: FOOTER -->
+<footer class="footer">
+    <div class="container">
+        <!-- top footer statrs -->
+        <div class="row top-footer">
+            <div class="col-xs-12 col-sm-4 address color-gray">
+                <h5>Address:</h5>
+                <p>Tepi Klinik Bidan Jalan Sungai Baru Simpang Ampat, 02700 Kangar, Perlis</p>
+                <h5>Operational Hours:</h5>
+                <p>Monday to Sunday 5 p.m to 11 p.m  <br>Closed on Tuesday</p>
+                <h5>Call us at: <a style="font-family: Arial; color:white;" >+60 11-3630 6284</a></h5>
+            </div>
+
+            <div class="col-xs-12 col-sm-2 about color-gray">
+            <h5>Social media</h5>
+            <a href="https://www.facebook.com/roses.ara.1447" target="_blank">
+                <img src="images/i.png" alt="Facebook" width="50" height="50">
+            </a>
+            <a href="https://www.instagram.com/araroses_solution/" target="_blank">
+                <img src="images/ii.png" alt="Instagram" width="50" height="50">
+            </a>
+            <a href="https://www.tiktok.com/@araroses19" target="_blank">
+                <img src="images/t.png" alt="Tiktok" width="50" height="50">
+            </a>
+
+            </div>
+            <div class="col-xs-12 col-sm-3 popular-locations color-gray">
+                <h5>Locations We Deliver To</h5>
+                <ul>
+                    <li><a >Arau</a> </li>
+                    <li><a >Beseri</a> </li>
+                    <li><a>Bintong</a> </li>
+                    <li><a >Kaki Bukit</a> </li>
+                    <li><a >Kuala Perlis</a> </li>
+                    <li><a >Kaki Bukit</a> </li>
+                    <li><a >Kangar</a> </li>
+                    <li><a >Simpang Ampat</a> </li>
+                    <li><a >Tambun Tulang</a> </li>
+                    <li><a >Mata Ayer</a> </li>
+                </ul>
+            </div>
+            <div class="col-xs-12 col-sm-3 payment-options color-gray">
+                <h5>All Major Credit Cards Accepted</h5>
+                <ul>
+                    <li>
+                    <a > <img src="images/paypal.png" alt="Paypal"> </a>
+                    </li>
+                    <li>
+                    <a > <img src="images/mastercard.png" alt="Mastercard"> </a>
+                    </li>
+                    <li>
+                    <a > <img src="images/maestro.png" alt="Maestro"> </a>
+                    </li>
+                    <li>
+                    <a > <img src="images/stripe.png" alt="Stripe"> </a>
+                    </li>
+                    <li>
+                    <a > <img src="images/bitcoin.png" alt="Bitcoin"> </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- top footer ends -->
+    </div>
+</footer>
+<!-- end:Footer -->
 
 
         

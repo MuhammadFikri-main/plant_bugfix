@@ -158,18 +158,18 @@ document.addEventListener("DOMContentLoaded", function () {
                 <div class="container">
                     <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 profile-img" style="display: flex; justify-content: flex-start; position: relative; overflow: hidden;">
-    <div class="image-wrap" style="margin-left: 120px;">
-        <figure>
-            <?php echo '<img src="admin/Res_img/' . $rows['image'] . '" alt="Restaurant logo" style="width:100px; height:auto;">'; ?>
-        </figure>
-    </div>
-</div>
+                    <div class="image-wrap" style="margin-left: 120px;">
+                        <figure>
+                            <?php echo '<img src="admin/Res_img/' . $rows['image'] . '" alt="Restaurant logo" style="width:100px; height:auto;">'; ?>
+                        </figure>
+                    </div>
+                </div>
 
 
                         <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 profile-desc">
                             <div class="pull-left right-text white-txt">
                                 <h6><a href="#"><?php echo $rows['title']; ?></a></h6>
-                                <p><?php echo $rows['address']; ?></p>
+                                <p style="color: white;"><?php echo $rows['address']; ?></p>
                                 <ul class="nav nav-inline">
                                      <li class="nav-item ratings">
                                         <a class="nav-link" href="#"> <span>

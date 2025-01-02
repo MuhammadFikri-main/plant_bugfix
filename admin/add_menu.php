@@ -5,106 +5,71 @@ include("../connection/connect.php");
 error_reporting(0);
 session_start();
 
-
-
-
 if(isset($_POST['submit']))           //if upload btn is pressed
 {
-	
-			
-		
-			
-		  
-		
-		
-		if(empty($_POST['d_name'])||empty($_POST['about'])||$_POST['price']==''||$_POST['res_name']=='')
-		{	
-											$error = 	'<div class="alert alert-danger alert-dismissible fade show">
-																<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-																<strong>All fields Must be Fillup!</strong>
-															</div>';
-									
-		
-								
-		}
-	else
-		{
-		
-				$fname = $_FILES['file']['name'];
-								$temp = $_FILES['file']['tmp_name'];
-								$fsize = $_FILES['file']['size'];
-								$extension = explode('.',$fname);
-								$extension = strtolower(end($extension));  
-								$fnew = uniqid().'.'.$extension;
-   
-								$store = "Res_img/dishes/".basename($fnew);                      // the path to store the upload image
-	
-					if($extension == 'jpg'||$extension == 'png'||$extension == 'gif' )
-					{        
-									if($fsize>=1000000)
-										{
-		
-		
-												$error = 	'<div class="alert alert-danger alert-dismissible fade show">
-																<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-																<strong>Max Image Size is 1024kb!</strong> Try different Image.
-															</div>';
-	   
-										}
-		
-									else
-										{
-												
-												
-												
-				                                 
-												$sql = "INSERT INTO dishes(rs_id,title,slogan,price,img) VALUE('".$_POST['res_name']."','".$_POST['d_name']."','".$_POST['about']."','".$_POST['price']."','".$fnew."')";  // store the submited data ino the database :images
-												mysqli_query($db, $sql); 
-												move_uploaded_file($temp, $store);
-			  
-													$success = 	'<div style="color: black" class="alert alert-success alert-dismissible fade show">
-																<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-																<strong>Congrats!</strong> New Product Added Successfully.
-															</div>';
+    if(empty($_POST['d_name'])||empty($_POST['about'])||$_POST['price']==''||$_POST['res_name']=='')
+    {
+        $error = '<div class="alert alert-danger alert-dismissible fade show">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <strong>All fields Must be Fillup!</strong>
+                        </div>';					
+    }
+    else{
+        $fname = $_FILES['file']['name'];
+        $temp = $_FILES['file']['tmp_name'];
+        $fsize = $_FILES['file']['size'];
+        $extension = explode('.',$fname);
+        $extension = strtolower(end($extension));  
+        $fnew = uniqid().'.'.$extension;
+        $store = "Res_img/dishes/".basename($fnew);  
+        
+        $qr_fname = $_FILES['qr_file']['name'];
+        $qr_temp = $_FILES['qr_file']['tmp_name'];
+        $qr_fsize = $_FILES['qr_file']['size'];
+        $qr_extension = explode('.', $qr_fname);
+        $qr_extension = strtolower(end($qr_extension));  
+        $qr_fnew = uniqid().'.'.$qr_extension;
+        $qr_store = "Res_img/qr_dishes/".basename($qr_fnew);// the path to store the upload image
+
+        if($extension == 'jpg'||$extension == 'png'||$extension == 'gif' )
+        {        
+            if($fsize>=1000000)
+            {
+                $error = 	'<div class="alert alert-danger alert-dismissible fade show">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <strong>Max Image Size is 1024kb!</strong> Try different Image.
+                            </div>';
+            }
+            else
+            {
                 
-	
-										}
-					}
-					elseif($extension == '')
-					{
-						$error = 	'<div class="alert alert-danger alert-dismissible fade show">
-																<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-																<strong>select image</strong>
-															</div>';
-					}
-					else{
-					
-											$error = 	'<div class="alert alert-danger alert-dismissible fade show">
-																<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-																<strong>invalid extension!</strong>png, jpg, Gif are accepted.
-															</div>';
-						
-	   
-						}               
-	   
-	   
-	   }
+                $sql = "INSERT INTO dishes(rs_id,title,slogan,price,img, qr_img) VALUE('".$_POST['res_name']."','".$_POST['d_name']."','".$_POST['about']."','".$_POST['price']."','".$fnew."','".$qr_fnew."')";  // store the submited data ino the database :images
+                mysqli_query($db, $sql); 
+                move_uploaded_file($temp, $store);
+                move_uploaded_file($qr_temp, $qr_store);
 
+                    $success = 	'<div style="color: black" class="alert alert-success alert-dismissible fade show">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <strong>Congrats!</strong> New Product Added Successfully.
+                            </div>';
+            }
+        }
+        elseif($extension == '' || $qr_extension == '')
+        {
+            $error = 	'<div class="alert alert-danger alert-dismissible fade show">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <strong>select image</strong>
+                        </div>';
+        }
+        else{
 
-
-	
-	
-	
-
+            $error = 	'<div class="alert alert-danger alert-dismissible fade show">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <strong>invalid extension!</strong>png, jpg, Gif are accepted.
+                        </div>';
+        }
+    }
 }
-
-
-
-
-
-
-
-
 ?>
 <head>
     <meta charset="utf-8">
@@ -224,10 +189,10 @@ if(isset($_POST['submit']))           //if upload btn is pressed
 								
                             </ul>
                         </li>
-                      <li> <a class="has-arrow  " href="#" aria-expanded="false"><i class="fa fa-leaf" aria-hidden="true"></i><span class="hide-menu">Menu</span></a>
+                      <li> <a class="has-arrow  " href="#" aria-expanded="false"><i class="fa fa-leaf" aria-hidden="true"></i><span class="hide-menu">Products</span></a>
                             <ul aria-expanded="false" class="collapse">
-								<li><a href="all_menu.php">All Menu</a></li>
-								<li><a href="add_menu.php">Add Menu</a></li>
+								<li><a href="all_menu.php">All Products</a></li>
+								<li><a href="add_menu.php">Add Products</a></li>
                               
                                 
                             </ul>
@@ -305,6 +270,19 @@ if(isset($_POST['submit']))           //if upload btn is pressed
                                                 <div class="form-group has-danger">
                                                     <label class="control-label">Image</label>
                                                     <input type="file" name="file"  id="lastName" class="form-control form-control-danger" placeholder="12n">
+                                                    </div>
+                                            </div>
+                                        </div>
+                                        <!--/row-->
+                                        <!--/row-->
+                                        <div class="row p-t-20">
+                                            <div class="col-md-6">
+                                            </div>
+                                            <!--/span-->
+                                            <div class="col-md-6">
+                                                <div class="form-group has-danger">
+                                                <label class="control-label">QR Code Image</label>
+                                                <input type="file" name="qr_file" class="form-control form-control-danger" placeholder="QR Code Image">
                                                     </div>
                                             </div>
                                         </div>

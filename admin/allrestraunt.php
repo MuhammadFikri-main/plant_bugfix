@@ -127,10 +127,10 @@ session_start();
                                 
                             </ul>
                         </li>
-                      <li> <a class="has-arrow  " href="#" aria-expanded="false"><i class="fa fa-leaf" aria-hidden="true"></i><span class="hide-menu">Menu</span></a>
+                      <li> <a class="has-arrow  " href="#" aria-expanded="false"><i class="fa fa-leaf" aria-hidden="true"></i><span class="hide-menu">Products</span></a>
                             <ul aria-expanded="false" class="collapse">
-								<li><a href="all_menu.php">All Menu</a></li>
-								<li><a href="add_menu.php">Add Menu</a></li>
+								<li><a href="all_menu.php">All Products</a></li>
+								<li><a href="add_menu.php">Add Products</a></li>
                               
                                 
                             </ul>
