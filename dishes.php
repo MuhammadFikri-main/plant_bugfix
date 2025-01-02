@@ -270,7 +270,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                 </div>
                             </div>
                             <div class="content">
-                                <h5><a href="dishes.php?res_id='.$product['rs_id'].'"><?php echo $product['title']; ?></a></h5>
+                                <h5><a href="shop.php?id=<?php echo $product['d_id']; ?>"><?php echo $product['title']; ?></a></h5>
                                 <div class="product-name"><?php echo $product['slogan']; ?></div>
                                 <div class="price-btn-block"> 
                                     <span class="price">RM<?php echo $product['price']; ?></span> 

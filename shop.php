@@ -118,7 +118,7 @@ $related_products = $related_products_query->get_result();
                                 </div>
                                 <div class="col-4">
                                     <a href="#">
-                                        <img class="card-img img-fluid" src="admin/Res_img/dishes/<?php echo $product['img']; ?>" alt="Product Image 2">
+                                        <img class="card-img img-fluid" src="admin/Res_img/qr_dishes/<?php echo $product['qr_img']; ?>" alt="Product Image 2">
                                     </a>
                                 </div>
                                 <!-- <div class="col-4">
@@ -196,17 +196,16 @@ $related_products = $related_products_query->get_result();
                     ?>
                     <div class="col-xs-12 col-sm-6 col-md-4 food-item">
                         <div class="food-item-wrap">
-                            <div class="figure-wrap bg-image" data-image-src="admin/Res_img/dishes/<?php echo $related_product['img']; ?>" style="width:400px;height:520px;">
+                            <div class="figure-wrap bg-image" data-image-src="admin/Res_img/dishes/<?php echo $related_product['img']; ?>" style="width:100%;height:350px;">
                                 <div class="rating pull-left"> 
                                     <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> 
                                 </div>
                             </div>
                             <div class="content">
-                                <h5><a href="dishes.php?res_id='.$related_product['rs_id'].'"><?php echo $related_product['title']; ?></a></h5>
-                                <!-- <div class="product-name">'.$related_product['slogan'].'</div> -->
+                                <h5><a href="shop.php?id=<?php echo $related_product['d_id']; ?>"><?php echo $related_product['title']; ?></a></h5>
                                 <div class="price-btn-block"> 
-                                    <span class="price">RM<?php echo $related_product['price']; ?></span> 
-                                    <a href="dishes.php?res_id='.$related_product['rs_id'].'" class="btn theme-btn-dash pull-right">Order Now</a> 
+                                    <span class="price">RM<?php echo $related_product['price']; ?></span>
+                                    <a href="shop.php?id=<?php echo $related_product['d_id']; ?>" class="btn theme-btn-dash pull-right">See More</a> 
                                 </div>
                             </div>
                         </div>

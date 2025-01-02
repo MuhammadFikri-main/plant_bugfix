@@ -23,7 +23,7 @@ if (empty($_SESSION['user_id'])) {
     <style type="text/css" rel="stylesheet">
         /* Your existing CSS styles */
         table {
-            width: 750px;
+            width: 80%; /* Make the table take full width */
             border-collapse: collapse;
             margin: auto;
         }
@@ -118,100 +118,94 @@ if (empty($_SESSION['user_id'])) {
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="bg-gray restaurant-entry">
                         <div class="row">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Order Id</th>
-                                        <th>Items</th>
-                                        <th>Quantities</th>
-                                        <th>Prices</th>
-                                        <th>Total Price</th>
-                                        <th>Status</th>
-                                        <th>Date</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    // Fetch all orders for the current user
-                                    $query_res = mysqli_query($db, "SELECT * FROM users_orders WHERE u_id='" . $_SESSION['user_id'] . "' GROUP BY o_id ORDER BY o_id DESC");
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Order Id</th>
+                                            <th>Date</th>
+                                            <th>Items</th>
+                                            <th>Prices</th>
+                                            <th>Total Price</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        // Fetch all orders for the current user
+                                        $query_res = mysqli_query($db, "SELECT * FROM users_orders WHERE u_id='" . $_SESSION['user_id'] . "' GROUP BY o_id ORDER BY o_id DESC");
 
-                                    if (!mysqli_num_rows($query_res) > 0) {
-                                        echo '<tr><td colspan="8"><center>You have No orders Placed yet.</center></td></tr>';
-                                    } else {
-                                        while ($order = mysqli_fetch_array($query_res)) {
-                                            $order_id = $order['o_id'];
-                                            // Fetch all items for this order
-                                            $items_query = mysqli_query($db, "SELECT * FROM order_items WHERE o_id='$order_id'");
-                                            $items = [];
-                                            $total_price = 0; // Initialize total price for the order
-                                            while ($item = mysqli_fetch_array($items_query)) {
-                                                $items[] = $item;
-                                                $total_price += $item['price'] * $item['quantity']; // Calculate total price
+                                        if (!mysqli_num_rows($query_res) > 0) {
+                                            echo '<tr><td colspan="8"><center>You have No orders Placed yet.</center></td></tr>';
+                                        } else {
+                                            while ($order = mysqli_fetch_array($query_res)) {
+                                                $order_id = $order['o_id'];
+                                                // Fetch all items for this order
+                                                $items_query = mysqli_query($db, "SELECT * FROM order_items WHERE o_id='$order_id'");
+                                                $items = [];
+                                                $total_price = 0; // Initialize total price for the order
+                                                while ($item = mysqli_fetch_array($items_query)) {
+                                                    $items[] = $item;
+                                                    $total_price += $item['price'] * $item['quantity']; // Calculate total price
+                                                }
+                                                ?>
+                                                <tr>
+                                                    <td data-column="Order Id"><?php echo $order_id; ?></td>
+                                                    <td data-column="Date"><?php echo $order['date']; ?></td>
+                                                    <td data-column="Items">
+                                                        <?php
+                                                        foreach ($items as $item) {
+                                                            echo htmlspecialchars($item['title']) . " x " . htmlspecialchars($item['quantity']) . "<br>";
+                                                        }
+                                                        ?>
+                                                    </td>
+                                                    <td data-column="Prices">
+                                                        <?php
+                                                        foreach ($items as $item) {
+                                                            echo "RM " . htmlspecialchars($item['price']) . "<br>";
+                                                        }
+                                                        ?>
+                                                    </td>
+                                                    <td data-column="Total Price">RM <?php echo number_format($total_price, 2); ?></td>
+                                                    <td data-column="Status">
+                                                        <?php
+                                                        $status = $order['status'];
+                                                        if ($status == "" || $status == "NULL") {
+                                                            echo '<button type="button" class="btn btn-info" style="font-weight:bold;">Order placed</button>';
+                                                        } elseif ($status == "in process") {
+                                                            echo '<button type="button" class="btn btn-warning"><span class="fa fa-cog fa-spin" aria-hidden="true"></span>In process</button>';
+                                                        } elseif ($status == "closed") {
+                                                            echo '<button type="button" class="btn btn-success"><span class="fa fa-check-circle" aria-hidden="true"></span>Delivered</button>';
+                                                        } elseif ($status == "rejected") {
+                                                            echo '<button type="button" class="btn btn-danger"><i class="fa fa-close"></i>Cancelled by admin</button>';
+                                                        } elseif ($status == "cancelled") {
+                                                            echo '<button type="button" class="btn btn-danger"><i class="fa fa-close"></i>Cancelled by user</button>';
+                                                        }
+                                                        ?>
+                                                    </td>
+                                                    <td data-column="Action">
+                                                        <?php
+                                                        if ($order['status'] != '' && $order['status'] != 'in process') {
+                                                            echo '<a href="delete_orders.php?order_del=' . $order_id . '" onclick="return confirm(\'Are you sure you want to delete this order history?\');" class="btn btn-danger btn-flat btn-addon btn-xs m-b-10"><i class="fa fa-trash-o" style="font-size:16px"></i></a>';
+                                                        } else {
+                                                            echo '<button class="btn btn-danger btn-flat btn-addon btn-xs m-b-10" disabled><i class="fa fa-trash-o" style="font-size:16px"></i></button>';
+                                                        }
+                                                        if ($order['status'] != 'closed' && $order['status'] != 'in process' && $order['status'] != 'cancelled' && $order['status'] != 'rejected') {
+                                                            echo '<a href="cancel_order.php?order_id=' . $order_id . '" onclick="return confirm(\'Are you sure you want to cancel this order?\');"><button class="btn btn-danger btn-flat btn-addon btn-xs m-b-10">Cancel Order</button></a>';
+                                                        } else {
+                                                            echo '<button class="btn btn-danger btn-addon btn-xs m-b-10" disabled>Cancel Order</button>';
+                                                        }
+                                                        ?>
+                                                    </td>
+                                                </tr>
+                                                <?php
                                             }
-                                            ?>
-                                            <tr>
-                                                <td data-column="Order Id"><?php echo $order_id; ?></td>
-                                                <td data-column="Items">
-                                                    <?php
-                                                    foreach ($items as $item) {
-                                                        echo htmlspecialchars($item['title']) . "<br>";
-                                                    }
-                                                    ?>
-                                                </td>
-                                                <td data-column="Quantities">
-                                                    <?php
-                                                    foreach ($items as $item) {
-                                                        echo htmlspecialchars($item['quantity']) . "<br>";
-                                                    }
-                                                    ?>
-                                                </td>
-                                                <td data-column="Prices">
-                                                    <?php
-                                                    foreach ($items as $item) {
-                                                        echo "RM " . htmlspecialchars($item['price']) . "<br>";
-                                                    }
-                                                    ?>
-                                                </td>
-                                                <td data-column="Total Price">RM <?php echo number_format($total_price, 2); ?></td>
-                                                <td data-column="Status">
-                                                    <?php
-                                                    $status = $order['status'];
-                                                    if ($status == "" || $status == "NULL") {
-                                                        echo '<button type="button" class="btn btn-info" style="font-weight:bold;">Order placed</button>';
-                                                    } elseif ($status == "in process") {
-                                                        echo '<button type="button" class="btn btn-warning"><span class="fa fa-cog fa-spin" aria-hidden="true"></span>In process</button>';
-                                                    } elseif ($status == "closed") {
-                                                        echo '<button type="button" class="btn btn-success"><span class="fa fa-check-circle" aria-hidden="true"></span>Delivered</button>';
-                                                    } elseif ($status == "rejected") {
-                                                        echo '<button type="button" class="btn btn-danger"><i class="fa fa-close"></i>Cancelled by admin</button>';
-                                                    } elseif ($status == "cancelled") {
-                                                        echo '<button type="button" class="btn btn-danger"><i class="fa fa-close"></i>Cancelled by user</button>';
-                                                    }
-                                                    ?>
-                                                </td>
-                                                <td data-column="Date"><?php echo $order['date']; ?></td>
-                                                <td data-column="Action">
-                                                    <?php
-                                                    if ($order['status'] != '' && $order['status'] != 'in process') {
-                                                        echo '<a href="delete_orders.php?order_del=' . $order_id . '" onclick="return confirm(\'Are you sure you want to delete this order history?\');" class="btn btn-danger btn-flat btn-addon btn-xs m-b-10"><i class="fa fa-trash-o" style="font-size:16px"></i></a>';
-                                                    } else {
-                                                        echo '<button class="btn btn-danger btn-flat btn-addon btn-xs m-b-10" disabled><i class="fa fa-trash-o" style="font-size:16px"></i></button>';
-                                                    }
-                                                    if ($order['status'] != 'closed' && $order['status'] != 'in process' && $order['status'] != 'cancelled' && $order['status'] != 'rejected') {
-                                                        echo '<a href="cancel_order.php?order_id=' . $order_id . '" onclick="return confirm(\'Are you sure you want to cancel this order?\');"><button class="btn btn-danger btn-flat btn-addon btn-xs m-b-10">Cancel Order</button></a>';
-                                                    } else {
-                                                        echo '<button class="btn btn-danger btn-addon btn-xs m-b-10" disabled>Cancel Order</button>';
-                                                    }
-                                                    ?>
-                                                </td>
-                                            </tr>
-                                            <?php
                                         }
-                                    }
-                                    ?>
-                                </tbody>
-                            </table>
+                                        ?>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
