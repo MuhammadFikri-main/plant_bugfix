@@ -89,7 +89,7 @@ if (empty($_SESSION['user_id'])) {
                         <?php
                         $ress = mysqli_query($db, "SELECT * FROM shop");
                         while ($rows = mysqli_fetch_array($ress)) {
-                            echo '<li class="nav-item"><a class="nav-link active" href="dishes.php?res_id=' . $rows['rs_id'] . '">Menu</a></li>';
+                            echo '<li class="nav-item"><a class="nav-link active" href="product.php?res_id=' . $rows['rs_id'] . '">Menu</a></li>';
                         }
                         if (empty($_SESSION["user_id"])) {
                             echo '<li class="nav-item"><a href="login.php" class="nav-link active">Login</a></li>

@@ -16,6 +16,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'update') {
 }
 
 // Redirect back to the page displaying the cart
-header("Location: dishes.php?res_id=$res_id");
+header("Location: product.php?res_id=$res_id");
 exit();
 ?>

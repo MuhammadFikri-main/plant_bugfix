@@ -39,7 +39,7 @@ $ress = mysqli_query($db, "select * from restaurant");
 while ($rows = mysqli_fetch_array($ress)) {
     echo '
     <li class="nav-item">
-        <a class="nav-link active" href="dishes.php?res_id=' . $rows['rs_id'] . '">Menu</a>
+        <a class="nav-link active" href="product.php?res_id=' . $rows['rs_id'] . '">Menu</a>
     </li>';
 }
 ?>
@@ -73,7 +73,7 @@ while ($rows = mysqli_fetch_array($ress)) {
                     <ul class="row links">
 
                     
-                    <li class="col-xs-12 col-sm-4 link-item active"><span>1</span><a href="dishes.php?res_id=<?php echo $_GET['res_id']; ?>">Pick your favourite plant</a></li>
+                    <li class="col-xs-12 col-sm-4 link-item active"><span>1</span><a href="product.php?res_id=<?php echo $_GET['res_id']; ?>">Pick your favourite plant</a></li>
                     <li class="col-xs-12 col-sm-4 link-item"><span>2</span><a href="#">Get delivered & Pay</a></li>
                 </ul>
                 </div>
@@ -142,11 +142,11 @@ while ($rows = mysqli_fetch_array($ress)) {
 						
 													 echo' <div class="col-sm-12 col-md-12 col-lg-8 text-xs-center text-sm-left">
 															<div class="entry-logo">
-																<a class="img-fluid" href="dishes.php?res_id='.$rows['rs_id'].'" > <img src="admin/Res_img/'.$rows['image'].'" alt="Food logo"></a>
+																<a class="img-fluid" href="product.php?res_id='.$rows['rs_id'].'" > <img src="admin/Res_img/'.$rows['image'].'" alt="Food logo"></a>
 															</div>
 															<!-- end:Logo -->
 															<div class="entry-dscr">
-																<h5><a href="dishes.php?res_id='.$rows['rs_id'].'" >'.$rows['title'].'</a></h5> <span>'.$rows['address'].' <a href="#">...</a></span>
+																<h5><a href="product.php?res_id='.$rows['rs_id'].'" >'.$rows['title'].'</a></h5> <span>'.$rows['address'].' <a href="#">...</a></span>
 																<ul class="list-inline">
 																	<li class="list-inline-item"><i class="fa fa-check"></i> Min RM; 100</li>
 																	<li class="list-inline-item"><i class="fa fa-motorcycle"></i> 30 min</li>
@@ -159,7 +159,7 @@ while ($rows = mysqli_fetch_array($ress)) {
 																<div class="right-content bg-white">
 																	<div class="right-review">
 																		<div class="rating-block"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> </div>
-																		<p> 56 Reviews</p> <a href="dishes.php?res_id='.$rows['rs_id'].'" class="btn theme-btn-dash">View Menu</a> </div>
+																		<p> 56 Reviews</p> <a href="product.php?res_id='.$rows['rs_id'].'" class="btn theme-btn-dash">View Menu</a> </div>
 																</div>
 																<!-- end:right info -->
 															</div>';

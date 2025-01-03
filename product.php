@@ -115,7 +115,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             while ($rows = mysqli_fetch_array($ress)) {
                                 echo '
                                 <li class="nav-item">
-                                    <a class="nav-link" href="dishes.php?res_id=' . $rows['rs_id'] . '">Menu</a>
+                                    <a class="nav-link" href="product.php?res_id=' . $rows['rs_id'] . '">Menu</a>
                                 </li>';
                             }
                         ?>
@@ -143,7 +143,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 <ul class="row links">
 
                     
-                    <li class="col-xs-12 col-sm-4 link-item active"><span>1</span><a href="dishes.php?res_id=<?php echo $_GET['res_id']; ?>">Pick your favourite plant</a></li>
+                    <li class="col-xs-12 col-sm-4 link-item active"><span>1</span><a href="product.php?res_id=<?php echo $_GET['res_id']; ?>">Pick your favourite plant</a></li>
                     <li class="col-xs-12 col-sm-4 link-item"><span>2</span><a href="#">Get delivered & Pay</a></li>
                 </ul>
             </div>
@@ -215,7 +215,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                 foreach ($_SESSION["cart_item"] as $item) {
                                 ?>
                                     <div class="title-row">
-                                        <?php echo $item["title"]; ?><a href="dishes.php?res_id=<?php echo $_GET['res_id']; ?>&action=remove&id=<?php echo $item["d_id"]; ?>">
+                                        <?php echo $item["title"]; ?><a href="product.php?res_id=<?php echo $_GET['res_id']; ?>&action=remove&id=<?php echo $item["d_id"]; ?>">
                                             <i class="fa fa-trash pull-right"></i></a>
                                     </div>
 
@@ -264,7 +264,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         {
                 ?>
                 <div class="col-xs-12 col-sm-6 col-md-4 food-item">
-                    <form method="post" action='dishes.php?res_id=<?php echo $_GET['res_id'];?>&action=add&id=<?php echo $product['d_id']; ?>'>
+                    <form method="post" action='product.php?res_id=<?php echo $_GET['res_id'];?>&action=add&id=<?php echo $product['d_id']; ?>'>
                         <div class="food-item-wrap">
                             <div class="figure-wrap bg-image" data-image-src="admin/Res_img/dishes/<?php echo $product['img']; ?>" style="width:100%;height:350px;">
                                 <div class="rating pull-left"> 

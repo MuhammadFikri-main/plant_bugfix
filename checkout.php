@@ -172,7 +172,7 @@ $ress = mysqli_query($db, "select * from shop");
 while ($rows = mysqli_fetch_array($ress)) {
     echo '
     <li class="nav-item">
-        <a class="nav-link active" href="dishes.php?res_id=' . $rows['rs_id'] . '">Menu</a>
+        <a class="nav-link active" href="product.php?res_id=' . $rows['rs_id'] . '">Menu</a>
     </li>';
 }
 ?>	<?php
@@ -244,7 +244,7 @@ foreach ($_SESSION["cart_item"] as $item)  // fetch items define current into se
 ?>									
 									
                                       <div class="title-row">
-										<?php echo $item["title"]; ?><a href="dishes.php?res_id=<?php echo $_GET['res_id']; ?> ">
+										<?php echo $item["title"]; ?><a href="product.php?res_id=<?php echo $_GET['res_id']; ?> ">
 										</a>
 										</div>
 										

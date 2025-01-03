@@ -101,7 +101,7 @@ $ress = mysqli_query($db, "select * from shop");
 while ($rows = mysqli_fetch_array($ress)) {
     echo '
     <li class="nav-item">
-        <a class="nav-link active" href="dishes.php?res_id=' . $rows['rs_id'] . '">Menu</a>
+        <a class="nav-link active" href="product.php?res_id=' . $rows['rs_id'] . '">Menu</a>
     </li>';
 }
 ?>
@@ -210,7 +210,7 @@ while ($rows = mysqli_fetch_array($ress)) {
                             </div>
                         </div>
                         <div class="content">
-                            <h5><a href="dishes.php?res_id='.$r['rs_id'].'">'.$r['title'].'</a></h5>
+                            <h5><a href="product.php?res_id='.$r['rs_id'].'">'.$r['title'].'</a></h5>
                             <div class="product-name">'.$r['slogan'].'</div>
                             <div class="price-btn-block"> 
                                 <span class="price">RM'.$r['price'].'</span> 

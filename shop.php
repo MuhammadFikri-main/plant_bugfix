@@ -65,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit();
         } elseif ($_POST['submit'] === 'addtocard') {
             // Redirect back to the dishes page
-            header("Location: dishes.php?res_id={$product['rs_id']}&action=add&id=$d_id");
+            header("Location: product.php?res_id={$product['rs_id']}&action=add&id=$d_id");
             exit();
         }
     }
@@ -85,11 +85,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link href="css/style.css" rel="stylesheet">
     <style>
         /* Consistent image size for product and related products */
-        .product-image, .related-products .card-img-top {
+        /* .product-image, .related-products .card-img-top {
             /*width: 400px;
             height: 520px; /* Fixed height for consistency */
             /* object-fit: cover; /* Ensures the image covers the area without distortion */
-        }
+        } */
 
         /* Carousel image size */
         .carousel-item img {
@@ -124,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $restaurant_ids = [];
                 while ($rows = mysqli_fetch_array($ress)) {
                     $restaurant_ids[] = $rows['rs_id']; // Save each restaurant ID
-                    echo '<li style="margin-right: 20px;"><a href="dishes.php?res_id=' . $rows['rs_id'] . '" style="color: white; text-decoration: none;">Menu</a></li>';
+                    echo '<li style="margin-right: 20px;"><a href="product.php?res_id=' . $rows['rs_id'] . '" style="color: white; text-decoration: none;">Menu</a></li>';
                 }
                 if (empty($_SESSION["user_id"])) {
                     echo '<li style="margin-right: 20px;"><a href="login.php" style="color: white; text-decoration: none;">Login</a></li>
