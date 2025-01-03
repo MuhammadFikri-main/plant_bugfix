@@ -9,7 +9,7 @@ session_start();
 // Fetch product details based on the ID from the URL
 if (isset($_GET['id'])) {
     $product_id = $_GET['id'];
-    $stmt = $db->prepare("SELECT * FROM dishes WHERE d_id = ?");
+    $stmt = $db->prepare("SELECT * FROM product WHERE d_id = ?");
     $stmt->bind_param("i", $product_id);
     $stmt->execute();
     $product = $stmt->get_result()->fetch_assoc();
@@ -22,7 +22,7 @@ if (isset($_GET['id'])) {
 }
 
 // Fetch related products from the same restaurant
-$related_products_query = $db->prepare("SELECT * FROM dishes WHERE rs_id = ? AND d_id != ? LIMIT 3");
+$related_products_query = $db->prepare("SELECT * FROM product WHERE rs_id = ? AND d_id != ? LIMIT 3");
 $related_products_query->bind_param("ii", $restaurant_id, $product_id);
 $related_products_query->execute();
 $related_products = $related_products_query->get_result();
@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $d_id = $_POST['d_id'];
 
         // Fetch product details
-        $stmt = $db->prepare("SELECT * FROM dishes WHERE d_id = ?");
+        $stmt = $db->prepare("SELECT * FROM product WHERE d_id = ?");
         $stmt->bind_param("i", $d_id);
         $stmt->execute();
         $product = $stmt->get_result()->fetch_assoc();
@@ -120,7 +120,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <ul style="list-style: none; display: flex; margin: 0; padding: 0;">
                 <li style="margin-right: 20px;"><a href="index.php" style="color: white; text-decoration: none;">Home</a></li>
                 <?php
-                $ress = mysqli_query($db, "SELECT * FROM restaurant");
+                $ress = mysqli_query($db, "SELECT * FROM shop");
                 $restaurant_ids = [];
                 while ($rows = mysqli_fetch_array($ress)) {
                     $restaurant_ids[] = $rows['rs_id']; // Save each restaurant ID

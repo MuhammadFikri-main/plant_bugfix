@@ -23,7 +23,7 @@ if(isset($_POST['submit'] ))
 	
        
 	
-	$mql = "update res_category set c_name ='$_POST[c_name]' where c_id='$_GET[cat_upd]'";
+	$mql = "update shop_category set c_name ='$_POST[c_name]' where c_id='$_GET[cat_upd]'";
 	mysqli_query($db, $mql);
 			$success = 	'<div class="alert alert-success alert-dismissible fade show">
 																<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -354,7 +354,7 @@ if(isset($_POST['submit'] ))
                             <div class="card-body">
                                 <form action='' method='post' >
                                     <div class="form-body">
-                                        <?php $ssql ="select * from res_category where c_id='$_GET[cat_upd]'";
+                                        <?php $ssql ="select * from shop_category where c_id='$_GET[cat_upd]'";
 													$res=mysqli_query($db, $ssql); 
 													$row=mysqli_fetch_array($res);?>
                                         <hr>

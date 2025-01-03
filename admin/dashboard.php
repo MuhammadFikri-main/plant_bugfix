@@ -162,7 +162,7 @@ else
                                 </div>
                                 <div class="media-body media-text-right">
 								<a href="all_menu.php">
-                                    <h2><?php $sql="select * from dishes";
+                                    <h2><?php $sql="select * from product";
 												$result=mysqli_query($db,$sql); 
 													$rws=mysqli_num_rows($result);
 													

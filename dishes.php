@@ -4,6 +4,8 @@
 <?php
 include("connection/connect.php"); // connection to db
 error_reporting(0);
+// error_reporting(E_ALL);
+// ini_set('display_errors', 1);
 session_start();
 
 include_once 'product-action.php'; //including controller
@@ -108,7 +110,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     <ul class="nav navbar-nav">
                         <li class="nav-item"> <a class="nav-link active" href="index.php">Home <span class="sr-only">(current)</span></a> </li>
                         <?php
-                            $ress = mysqli_query($db, "select * from restaurant");
+                            $ress = mysqli_query($db, "select * from shop");
 
                             while ($rows = mysqli_fetch_array($ress)) {
                                 echo '
@@ -150,7 +152,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         <!-- Inner page hero -->
         <?php
-        $ress = mysqli_query($db, "select * from restaurant where rs_id='$_GET[res_id]'");
+        $ress = mysqli_query($db, "select * from shop where rs_id='$_GET[res_id]'");
         $rows = mysqli_fetch_array($ress);
         ?>
         <section class="inner-page-hero bg-image" data-image-src="images/img/7.jpg">
@@ -253,7 +255,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 </div>
                 <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9">
                 <?php  // display values and item of food/dishes
-                    $stmt = $db->prepare("select * from dishes where rs_id='$_GET[res_id]'");
+                    $stmt = $db->prepare("select * from product where rs_id='$_GET[res_id]'");
                     $stmt->execute();
                     $products = $stmt->get_result();
                     if (!empty($products)) 

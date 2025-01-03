@@ -96,7 +96,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         <ul class="nav navbar-nav">
                             <li class="nav-item"> <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a> </li>
                             <?php
-$ress = mysqli_query($db, "select * from restaurant");
+$ress = mysqli_query($db, "select * from shop");
 
 while ($rows = mysqli_fetch_array($ress)) {
     echo '
@@ -199,7 +199,7 @@ while ($rows = mysqli_fetch_array($ress)) {
         <div class="row" size=20>
             <?php 
             // Fetch records from database to display popular first 3 dishes from table
-            $query_res= mysqli_query($db,"select * from dishes LIMIT 3"); 
+            $query_res= mysqli_query($db,"select * from product LIMIT 3"); 
             while($r=mysqli_fetch_array($query_res)) {
                 echo '
                 <div class="col-xs-12 col-sm-6 col-md-4 food-item">

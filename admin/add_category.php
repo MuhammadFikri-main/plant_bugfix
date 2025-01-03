@@ -18,7 +18,7 @@ if(isset($_POST['submit'] ))
 	else
 	{
 		
-	$check_cat= mysqli_query($db, "SELECT c_name FROM res_category where c_name = '".$_POST['c_name']."' ");
+	$check_cat= mysqli_query($db, "SELECT c_name FROM shop_category where c_name = '".$_POST['c_name']."' ");
 
 	
 	
@@ -32,7 +32,7 @@ if(isset($_POST['submit'] ))
 	else{
        
 	
-	$mql = "INSERT INTO res_category(c_name) VALUES('".$_POST['c_name']."')";
+	$mql = "INSERT INTO shop_category(c_name) VALUES('".$_POST['c_name']."')";
 	mysqli_query($db, $mql);
 			$success = 	'<div class="alert alert-success alert-dismissible fade show">
 																<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -268,7 +268,7 @@ if(isset($_POST['submit'] ))
                                            
 											
 											<?php
-												$sql="SELECT * FROM res_category order by c_id desc";
+												$sql="SELECT * FROM shop_category order by c_id desc";
 												$query=mysqli_query($db,$sql);
 												
 													if(!mysqli_num_rows($query) > 0 )

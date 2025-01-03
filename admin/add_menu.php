@@ -43,7 +43,7 @@ if(isset($_POST['submit']))           //if upload btn is pressed
             else
             {
                 
-                $sql = "INSERT INTO dishes(rs_id,title,slogan,price,img, qr_img) VALUE('".$_POST['res_name']."','".$_POST['d_name']."','".$_POST['about']."','".$_POST['price']."','".$fnew."','".$qr_fnew."')";  // store the submited data ino the database :images
+                $sql = "INSERT INTO product(rs_id,title,slogan,price,img, qr_img) VALUE('".$_POST['res_name']."','".$_POST['d_name']."','".$_POST['about']."','".$_POST['price']."','".$fnew."','".$qr_fnew."')";  // store the submited data ino the database :images
                 mysqli_query($db, $sql); 
                 move_uploaded_file($temp, $store);
                 move_uploaded_file($qr_temp, $qr_store);
@@ -302,7 +302,7 @@ if(isset($_POST['submit']))           //if upload btn is pressed
                                                     <label class="control-label">Select Shop</label>
 													<select name="res_name" class="form-control custom-select" data-placeholder="Choose a Category" tabindex="1">
                                                         <option>--Choose the Shop--</option>
-                                                 <?php $ssql ="select * from restaurant";
+                                                 <?php $ssql ="select * from shop";
 													$res=mysqli_query($db, $ssql); 
 													while($row=mysqli_fetch_array($res))  
 													{

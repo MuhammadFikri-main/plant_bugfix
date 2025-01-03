@@ -198,7 +198,7 @@ session_start();
 										
                                            
                                                	<?php
-												$sql="SELECT * FROM restaurant order by rs_id desc";
+												$sql="SELECT * FROM shop order by rs_id desc";
 												$query=mysqli_query($db,$sql);
 												
 													if(!mysqli_num_rows($query) > 0 )
@@ -210,7 +210,7 @@ session_start();
 																	while($rows=mysqli_fetch_array($query))
 																		{
 																					
-																				$mql="SELECT * FROM res_category where c_id='".$rows['c_id']."'";
+																				$mql="SELECT * FROM shop_category where c_id='".$rows['c_id']."'";
 																					$res=mysqli_query($db,$mql);
 																					$row=mysqli_fetch_array($res);
 																				

@@ -87,7 +87,7 @@ if (empty($_SESSION['user_id'])) {
                     <ul class="nav navbar-nav">
                         <li class="nav-item"><a class="nav-link active" href="index.php">Home <span class="sr-only">(current)</span></a></li>
                         <?php
-                        $ress = mysqli_query($db, "SELECT * FROM restaurant");
+                        $ress = mysqli_query($db, "SELECT * FROM shop");
                         while ($rows = mysqli_fetch_array($ress)) {
                             echo '<li class="nav-item"><a class="nav-link active" href="dishes.php?res_id=' . $rows['rs_id'] . '">Menu</a></li>';
                         }

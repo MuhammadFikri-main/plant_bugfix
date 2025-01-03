@@ -167,7 +167,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         <ul class="nav navbar-nav">
                             <li class="nav-item"> <a class="nav-link active" href="index.php">Home <span class="sr-only">(current)</span></a> </li>
                            <?php
-$ress = mysqli_query($db, "select * from restaurant");
+$ress = mysqli_query($db, "select * from shop");
 
 while ($rows = mysqli_fetch_array($ress)) {
     echo '

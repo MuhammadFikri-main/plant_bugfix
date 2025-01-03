@@ -58,7 +58,7 @@ if(isset($_POST['submit']))           //if upload btn is pressed
 												
 												
 				                                 
-												$sql = "update dishes set rs_id='$_POST[res_name]',title='$_POST[d_name]',slogan='$_POST[about]',price='$_POST[price]',img='$fnew' where d_id='$_GET[menu_upd]'";  // update the submited data ino the database :images
+												$sql = "update product set rs_id='$_POST[res_name]',title='$_POST[d_name]',slogan='$_POST[about]',price='$_POST[price]',img='$fnew' where d_id='$_GET[menu_upd]'";  // update the submited data ino the database :images
 												mysqli_query($db, $sql); 
 												move_uploaded_file($temp, $store);
 			  
@@ -241,7 +241,7 @@ if(isset($_POST['submit']))           //if upload btn is pressed
                             <div class="card-body">
                                 <form action='' method='post'  enctype="multipart/form-data">
                                     <div class="form-body">
-                                        <?php $qml ="select * from dishes where d_id='$_GET[menu_upd]'";
+                                        <?php $qml ="select * from product where d_id='$_GET[menu_upd]'";
 													$rest=mysqli_query($db, $qml); 
 													$roww=mysqli_fetch_array($rest);
 														?>
@@ -294,7 +294,7 @@ if(isset($_POST['submit']))           //if upload btn is pressed
                                                     <label class="control-label">Select Shop</label>
 													<select name="res_name" class="form-control custom-select" data-placeholder="Choose a Category" tabindex="1">
                                                         <option>--Select any Shop--</option>
-                                                 <?php $ssql ="select * from restaurant";
+                                                 <?php $ssql ="select * from shop";
 													$res=mysqli_query($db, $ssql); 
 													while($row=mysqli_fetch_array($res))  
 													{
