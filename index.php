@@ -184,7 +184,7 @@ while ($rows = mysqli_fetch_array($ress)) {
 </style>
 	  
  <!-- Buttons before product section -->
-<div style="text-align: center; margin-bottom: 30px;">
+<div style="text-align: center; margin-bottom: 10px;">
     <a href="#popular-products" class="btn btn-success" style="padding: 12px 25px; font-size: 16px; margin: 10px;">Popular Products of this Week</a>
     <a href="#how-it-works" class="btn btn-primary" style="padding: 12px 25px; font-size: 16px; margin: 10px;">Easy 2 Steps Order</a>
 </div>

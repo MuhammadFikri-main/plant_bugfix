@@ -98,6 +98,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             /* object-fit: cover; */
         }
 
+        .carousel-image.active img {
+            border: 2px solid #007bff; /* Highlight the selected image */
+            box-shadow: 0 0 10px rgba(0, 123, 255, 0.5); /* Add a shadow effect */
+        }
+
         /* Related products section */
         .related-products {
             margin-top: 30px;
@@ -143,10 +148,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div class="page-wrapper">
     <div class="container m-t-30">
         <div class="row">
-            <!-- Product Image and Carousel -->
+            <!-- Main Product Image -->
             <div class="col-lg-5 mt-5">
                 <div class="card mb-3">
-                    <img class="product-image" src="admin/Res_img/dishes/<?php echo $product['img']; ?>" alt="<?php echo $product['title']; ?>">
+                    <img id="main-product-image" class="product-image" src="admin/Res_img/dishes/<?php echo $product['img']; ?>" alt="<?php echo $product['title']; ?>">
                 </div>
                 <!-- Start Carousel Wrapper -->
                 <div id="multi-item-example" class="col-12 carousel slide carousel-multi-item" data-bs-ride="carousel">
@@ -156,20 +161,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="carousel-item active">
                             <div class="row">
                                 <div class="col-4">
-                                    <a href="#">
+                                    <a href="#" class="carousel-image" data-image="admin/Res_img/dishes/<?php echo $product['img']; ?>">
                                         <img class="card-img img-fluid" src="admin/Res_img/dishes/<?php echo $product['img']; ?>" alt="Product Image 1">
                                     </a>
                                 </div>
                                 <div class="col-4">
-                                    <a href="#">
+                                    <a href="#" class="carousel-image" data-image="admin/Res_img/qr_dishes/<?php echo $product['qr_img']; ?>">
                                         <img class="card-img img-fluid" src="admin/Res_img/qr_dishes/<?php echo $product['qr_img']; ?>" alt="Product Image 2">
                                     </a>
                                 </div>
-                                <!-- <div class="col-4">
-                                    <a href="#">
-                                        <img class="card-img img-fluid" src="admin/Res_img/dishes/<?php echo $product['img']; ?>" alt="Product Image 3">
+                                <div class="col-4">
+                                    <a href="#" class="carousel-image" data-image="admin/Res_img/qr_dishes/<?php echo $product['qr_img']; ?>">
+                                        <img class="card-img img-fluid" src="admin/Res_img/qr_dishes/<?php echo $product['qr_img']; ?>" alt="Product Image 2">
                                     </a>
-                                </div> -->
+                                </div>
+                                <!-- Add more carousel images as needed -->
                             </div>
                         </div>
                         <!-- /.First slide -->
@@ -342,6 +348,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <script src="js/jquery.isotope.min.js"></script>
 <script src="js/headroom.js"></script>
 <script src="js/foodpicky.min.js"></script>
+<script>
+    // Add event listeners to carousel images
+    document.addEventListener('DOMContentLoaded', function () {
+        const carouselImages = document.querySelectorAll('.carousel-image');
+        const mainProductImage = document.getElementById('main-product-image');
+
+        carouselImages.forEach(image => {
+            image.addEventListener('click', function (e) {
+                e.preventDefault(); // Prevent default link behavior
+                const newImageSrc = image.getAttribute('data-image'); // Get the image source from the data attribute
+                mainProductImage.src = newImageSrc; // Update the main image source
+
+                // Optional: Add a visual indicator for the selected carousel image
+                carouselImages.forEach(img => img.classList.remove('active'));
+                image.classList.add('active');
+            });
+        });
+    });
+</script>
 </body>
 
 </html>
