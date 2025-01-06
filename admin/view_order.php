@@ -185,7 +185,11 @@ popUpWin = open(URLStr,'popUpWin', 'toolbar=no,location=no,directories=no,status
                                        
                                         <tbody>
                                            <?php
-											$sql="SELECT users.*, users_orders.* FROM users INNER JOIN users_orders ON users.u_id=users_orders.u_id where o_id='".$_GET['user_upd']."'";
+											$sql="SELECT users.*, users_orders.*, order_items.*
+                                            FROM users_orders 
+                                            INNER JOIN order_items ON order_items.o_id=users_orders.o_id
+                                            INNER JOIN users ON users.u_id=users_orders.u_id 
+                                            WHERE order_items.item_id='".$_GET['user_upd']."'";
 												$query=mysqli_query($db,$sql);
 												$rows=mysqli_fetch_array($query);
 												
@@ -204,7 +208,7 @@ $status = $rows['status'];
 if ($status != 'closed' && $status != 'cancelled' && $status != 'rejected') {
     ?>
     <center>
-        <a href="javascript:void(0);" onClick="popUpWindow('order_update.php?form_id=<?php echo htmlentities($rows['o_id']);?>');" title="Update order">
+        <a href="javascript:void(0);" onClick="popUpWindow('order_update.php?form_id=<?php echo htmlentities($rows['item_id']);?>');" title="Update order">
             <button type="button" class="btn btn-primary">Take Action</button>
         </a>
     </center>

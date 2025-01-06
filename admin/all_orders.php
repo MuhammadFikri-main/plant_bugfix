@@ -187,7 +187,10 @@ session_start();
                                            
 											
 											<?php
-												$sql="SELECT users.*, users_orders.* FROM users INNER JOIN users_orders ON users.u_id=users_orders.u_id ";
+												$sql="SELECT users.*, users_orders.*, order_items.*
+                                                        FROM users_orders 
+                                                        INNER JOIN order_items ON order_items.o_id=users_orders.o_id
+                                                        INNER JOIN users ON users.u_id=users_orders.u_id";
 												$query=mysqli_query($db,$sql);
 												
 													if(!mysqli_num_rows($query) > 0 )
@@ -237,7 +240,7 @@ if ($status == "" or $status == "NULL") {
 																									 <td>
 																									 <a href="delete_orders.php?order_del=<?php echo $rows['o_id'];?>" onclick="return confirm('Are you sure?');" class="btn btn-danger btn-flat btn-addon btn-xs m-b-10"><i class="fa fa-trash-o" style="font-size:16px"></i></a> 
 																								<?php
-																								echo '<a href="view_order.php?user_upd='.$rows['o_id'].'" " class="btn btn-info btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="ti-settings"></i></a>
+																								echo '<a href="view_order.php?user_upd='.$rows['item_id'].'" " class="btn btn-info btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="ti-settings"></i></a>
 																									</td>
 																									</tr>';
 																					 

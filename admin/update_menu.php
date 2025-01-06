@@ -5,91 +5,71 @@ include("../connection/connect.php");
 error_reporting(0);
 session_start();
 
-
-
-
 if(isset($_POST['submit']))           //if upload btn is pressed
 {
-	
-			
-		
-			
-		  
-		
-		
-		if(empty($_POST['d_name'])||empty($_POST['about'])||$_POST['price']==''||$_POST['res_name']=='')
-		{	
-											$error = 	'<div class="alert alert-danger alert-dismissible fade show">
-																<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-																<strong>All fields Must be Fillup!</strong>
-															</div>';
-									
-		
-								
-		}
-	else
-		{
-		
-				$fname = $_FILES['file']['name'];
-								$temp = $_FILES['file']['tmp_name'];
-								$fsize = $_FILES['file']['size'];
-								$extension = explode('.',$fname);
-								$extension = strtolower(end($extension));  
-								$fnew = uniqid().'.'.$extension;
-   
-								$store = "Res_img/dishes/".basename($fnew);                      // the path to store the upload image
-	
-					if($extension == 'jpg'||$extension == 'png'||$extension == 'gif' )
-					{        
-									if($fsize>=1000000)
-										{
-		
-		
-												$error = 	'<div class="alert alert-danger alert-dismissible fade show">
-																<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-																<strong>Max Image Size is 1024kb!</strong> Try different Image.
-															</div>';
-	   
-										}
-		
-									else
-										{
-												
-												
-												
-				                                 
-												$sql = "update product set rs_id='$_POST[res_name]',title='$_POST[d_name]',slogan='$_POST[about]',price='$_POST[price]',img='$fnew' where d_id='$_GET[menu_upd]'";  // update the submited data ino the database :images
-												mysqli_query($db, $sql); 
-												move_uploaded_file($temp, $store);
-			  
-													$success = 	'<div class="alert alert-success alert-dismissible fade show">
-																<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-																<strong>Record</strong>Updated.
-															</div>';
+    if(empty($_POST['d_name'])||empty($_POST['about'])||$_POST['price']==''||$_POST['res_name']=='')
+    {
+        $error = '<div class="alert alert-danger alert-dismissible fade show">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <strong>All fields Must be Fillup!</strong>
+                        </div>';					
+    }
+    else{
+        $fname = $_FILES['file']['name'];
+        $temp = $_FILES['file']['tmp_name'];
+        $fsize = $_FILES['file']['size'];
+        $extension = explode('.',$fname);
+        $extension = strtolower(end($extension));  
+        $fnew = uniqid().'.'.$extension;
+        $store = "Res_img/dishes/".basename($fnew);  
+        
+        $qr_fname = $_FILES['qr_file']['name'];
+        $qr_temp = $_FILES['qr_file']['tmp_name'];
+        $qr_fsize = $_FILES['qr_file']['size'];
+        $qr_extension = explode('.', $qr_fname);
+        $qr_extension = strtolower(end($qr_extension));  
+        $qr_fnew = uniqid().'.'.$qr_extension;
+        $qr_store = "Res_img/qr_dishes/".basename($qr_fnew);// the path to store the upload image
+
+        if($extension == 'jpg'||$extension == 'png'||$extension == 'gif' )
+        {        
+            if($fsize>=1000000)
+            {
+                $error = 	'<div class="alert alert-danger alert-dismissible fade show">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <strong>Max Image Size is 1024kb!</strong> Try different Image.
+                            </div>';
+            }
+            else
+            {
                 
-	
-										}
-					}
-					              
-	   
-	   
-	   }
+                $sql = "update product set rs_id='$_POST[res_name]',title='$_POST[d_name]',slogan='$_POST[about]',price='$_POST[price]',img='$fnew', qr_img='$qr_fnew' where d_id='$_GET[menu_upd]'";  // update the submited data ino the database :images
+                mysqli_query($db, $sql); 
+                move_uploaded_file($temp, $store);
+                move_uploaded_file($qr_temp, $qr_store);
 
+                    $success = 	'<div style="color: black" class="alert alert-success alert-dismissible fade show">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <strong>Congrats!</strong> New Product Update Successfully.
+                            </div>';
+            }
+        }
+        elseif($extension == '' || $qr_extension == '')
+        {
+            $error = 	'<div class="alert alert-danger alert-dismissible fade show">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <strong>select image</strong>
+                        </div>';
+        }
+        else{
 
-
-	
-	
-	
-
+            $error = 	'<div class="alert alert-danger alert-dismissible fade show">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <strong>invalid extension!</strong>png, jpg, Gif are accepted.
+                        </div>';
+        }
+    }
 }
-
-
-
-
-
-
-
-
 ?>
 <head>
     <meta charset="utf-8">
@@ -99,8 +79,8 @@ if(isset($_POST['submit']))           //if upload btn is pressed
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="images/1.jpg">
-    <title>Plant Shop - Admin Dashboard</title>
+	<link rel="icon" type="image/png" sizes="16x16" href="images/1.jpg">
+    <title>PLANT SHOP - Admin Dashboard</title>
     <!-- Bootstrap Core CSS -->
     <link href="css/lib/bootstrap/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
@@ -123,16 +103,16 @@ if(isset($_POST['submit']))           //if upload btn is pressed
     <!-- Main wrapper  -->
     <div id="main-wrapper">
         <!-- header header  -->
-        <div class="header">
+         <div class="header">
             <nav class="navbar top-navbar navbar-expand-md navbar-light">
-                <!-- Logo -->
+                                <!-- Logo -->
                 <div class="navbar-header">
                     <a class="navbar-brand" href="dashboard.php">
                         <!-- Logo icon -->
                         <b><img src="images/1.jpg" alt="homepage" class="dark-logo" width = "25px"/></b>
                         <!--End Logo icon -->
                         <!-- Logo text -->
-                        <span><b>PLANT Shop</b></span>
+                        <span><b>PLANT SHOP</b></span>
                     </a>
                 </div>
                 <!-- End Logo -->
@@ -142,11 +122,30 @@ if(isset($_POST['submit']))           //if upload btn is pressed
                         <!-- This is  -->
                         <li class="nav-item"> <a class="nav-link nav-toggler hidden-md-up text-muted  " href="javascript:void(0)"><i class="mdi mdi-menu"></i></a> </li>
                         <li class="nav-item m-l-10"> <a class="nav-link sidebartoggler hidden-sm-down text-muted  " href="javascript:void(0)"><i class="ti-menu"></i></a> </li>
-
+                     
+                       
                     </ul>
                     <!-- User profile and search -->
                     <ul class="navbar-nav my-lg-0">
 
+                       
+                        <!-- Comment -->
+                        <li class="nav-item dropdown">
+                           
+                            <div class="dropdown-menu dropdown-menu-right mailbox animated zoomIn">
+                                <ul>
+                                    <li>
+                                        <div class="drop-title">Notifications</div>
+                                    </li>
+                                    
+                                    <li>
+                                        <a class="nav-link text-center" href="javascript:void(0);"> <strong>Check all notifications</strong> <i class="fa fa-angle-right"></i> </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <!-- End Comment -->
+                      
                         <!-- Profile -->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-muted  " href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="images/users/5.jpg" alt="user" class="profile-pic" /></a>
@@ -167,7 +166,7 @@ if(isset($_POST['submit']))           //if upload btn is pressed
             <div class="scroll-sidebar">
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
-                   <ul id="sidebarnav">
+                    <ul id="sidebarnav">
                         <li class="nav-devider"></li>
                         <li class="nav-label">Admin Panel</li>
                         <li> <a class="has-arrow  " href="#" aria-expanded="false"><i class="fa fa-tachometer"></i><span class="hide-menu">Home</span></a>
@@ -176,12 +175,11 @@ if(isset($_POST['submit']))           //if upload btn is pressed
                                 
                             </ul>
                         </li>
-                       
+
                         <li> <a class="has-arrow  " href="#" aria-expanded="false">  <span><i class="fa fa-user f-s-20 "></i></span><span class="hide-menu">Users</span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="allusers.php">All Users</a></li>
-					
-								
+							
                                
                             </ul>
                         </li>
@@ -191,10 +189,10 @@ if(isset($_POST['submit']))           //if upload btn is pressed
 								
                             </ul>
                         </li>
-                      <li> <a class="has-arrow  " href="#" aria-expanded="false"><i class="fa fa-leaf" aria-hidden="true"></i><span class="hide-menu">Product</span></a>
+                      <li> <a class="has-arrow  " href="#" aria-expanded="false"><i class="fa fa-leaf" aria-hidden="true"></i><span class="hide-menu">Products</span></a>
                             <ul aria-expanded="false" class="collapse">
-								<li><a href="all_menu.php">All Product</a></li>
-								<li><a href="add_menu.php">Add Product</a></li>
+								<li><a href="all_menu.php">All Products</a></li>
+								<li><a href="add_menu.php">Add Products</a></li>
                               
                                 
                             </ul>
@@ -218,8 +216,8 @@ if(isset($_POST['submit']))           //if upload btn is pressed
             <!-- Bread crumb -->
             <div class="row page-titles">
                 <div class="col-md-5 align-self-center">
-                    <h3 class="text-primary">Update Product Info</h3> </div>
-               
+                    <h3 class="text-primary">Update New Product</h3> </div>
+                
             </div>
             <!-- End Bread crumb -->
             <!-- Container fluid  -->
@@ -230,13 +228,10 @@ if(isset($_POST['submit']))           //if upload btn is pressed
 									<?php  echo $error;
 									        echo $success; ?>
 									
-									
-								
-								
 					    <div class="col-lg-12">
                         <div class="card card-outline-primary">
                             <div class="card-header">
-                                <h4 class="m-b-0 text-white">Update Product for Shop</h4>
+                                <h4 class="m-b-0 text-white">Update Product to Shop</h4>
                             </div>
                             <div class="card-body">
                                 <form action='' method='post'  enctype="multipart/form-data">
@@ -279,16 +274,22 @@ if(isset($_POST['submit']))           //if upload btn is pressed
                                             </div>
                                         </div>
                                         <!--/row-->
+                                        <!--/row-->
+                                        <div class="row p-t-20">
+                                            <div class="col-md-6">
+                                            </div>
+                                            <!--/span-->
+                                            <div class="col-md-6">
+                                                <div class="form-group has-danger">
+                                                    <label class="control-label">QR Code Image</label>
+                                                    <input type="file" name="qr_file" class="form-control form-control-danger" placeholder="QR Code Image">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--/row-->
 										
                                             <!--/span-->
                                         <div class="row">
-                                            
-											
-											
-											
-											
-											
-											
 											 <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label class="control-label">Select Shop</label>
@@ -305,11 +306,7 @@ if(isset($_POST['submit']))           //if upload btn is pressed
 													 </select>
                                                 </div>
                                             </div>
-											
-											
-											
                                         </div>
-                                     
                                         </div>
                                     </div>
                                     <div class="form-actions">
@@ -320,25 +317,12 @@ if(isset($_POST['submit']))           //if upload btn is pressed
                             </div>
                         </div>
                     </div>
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
                 </div>
                 <!-- End PAge Content -->
             </div>
             <!-- End Container fluid  -->
             <!-- footer -->
-			<footer class="footer"> © 2024 All rights reserved. PLANT SHOP</a></b> Team. </footer>
+			<footer class="footer"> © 2024 All rights reserved. Made  by <b><a> PLANT SHOP </a></b> Team. </footer>
             <!-- End footer -->
         </div>
         <!-- End Page wrapper  -->
